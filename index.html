@@ -2,17 +2,18 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>تطبيق المهام الحديث</title>
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIti02KfYqNmC2Kcg2KfZhNmF2YfYp9mFIiwKICAic2hvcnRfbmFtZSI6ICLZhdi02KfZhdi5IiwKICAic3RhcnRfdXJsIjogIi4iLAogICJkaXNwbGF5Ijogc3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI2ZmZmZmZiIsCiAgInRoZW1lX2NvbG9yIjogIiM2NjdlZWEiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMTAwIDEwMCclM0UlM0NyZWN0IGZpbGw9JyUyMzY2N2VlYScgd2lkdGg9JzEwMCcgaGVpZ2h0PScxMDAnLyUzRSUzQ3RleHQgeD0nNTAnIHk9JzUwJyBmb250LXNpemU9JzUwJyB0ZXh0LWFuY2hvcj0nbWlkZGxlJyBkeT0nLjNlbSclM0UlRjAlOUYlOTMlOUQlM0MvdGV4dCUzRSUzQy9zdmclM0UiLAogICAgInNpemVzIjogIjE5MngxOTIiLAogICAgInR5cGUiOiAiaW1hZ2Uvc3ZnK3htbCIKICB9XQp9">
+    <meta name="theme-color" content="#667eea">
+    <title>تطبيق المهام</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -20,39 +21,26 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.98);
             width: 100%;
-            max-width: 600px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
-            backdrop-filter: blur(10px);
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 30px;
+            padding: 20px 15px 15px 15px;
             text-align: center;
             position: relative;
-            overflow: hidden;
+            flex-shrink: 0;
+            padding-top: max(20px, env(safe-area-inset-top));
         }
 
         .header::before {
@@ -78,8 +66,8 @@
 
         h1 {
             color: white;
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 1.8em;
+            margin-bottom: 8px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
@@ -88,60 +76,58 @@
             gap: 10px;
             justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .lang-switch {
             background: rgba(255, 255, 255, 0.2);
             border: 2px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: all 0.3s ease;
-        }
-
-        .lang-switch:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .task-counter {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 1.1em;
-            margin-top: 15px;
-        }
-
-        .input-container {
-            padding: 25px;
-            background: linear-gradient(to bottom, #f8f9fa, white);
-            border-bottom: 2px solid #e9ecef;
-        }
-
-        .filter-bar {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .filter-btn {
-            padding: 8px 16px;
-            border: 2px solid #e9ecef;
-            background: white;
+            padding: 6px 16px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 0.85em;
             transition: all 0.3s ease;
         }
 
-        .filter-btn:hover {
-            border-color: #667eea;
-            transform: translateY(-2px);
+        .task-counter {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 0.95em;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+
+        .input-container {
+            padding: 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            flex-shrink: 0;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 12px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 2px;
+        }
+
+        .filter-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-btn {
+            padding: 7px 14px;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .filter-btn.active {
@@ -152,54 +138,52 @@
 
         .search-wrapper {
             position: relative;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .search-input {
             width: 100%;
-            padding: 12px 40px 12px 20px;
+            padding: 11px 38px 11px 15px;
             border: 2px solid #e9ecef;
             border-radius: 25px;
-            font-size: 0.95em;
+            font-size: 0.9em;
             transition: all 0.3s ease;
         }
 
         .search-input:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .search-icon {
             position: absolute;
-            right: 15px;
+            right: 12px;
             top: 50%;
             transform: translateY(-50%);
-            color: #999;
-            font-size: 1.2em;
+            font-size: 1.1em;
         }
 
         [dir="ltr"] .search-icon {
             right: auto;
-            left: 15px;
+            left: 12px;
         }
 
         [dir="ltr"] .search-input {
-            padding: 12px 20px 12px 40px;
+            padding: 11px 15px 11px 38px;
         }
 
         .input-wrapper {
             display: flex;
-            gap: 10px;
-            position: relative;
+            gap: 8px;
         }
 
         #taskInput {
             flex: 1;
-            padding: 15px 20px;
+            padding: 12px 15px;
             border: 2px solid #e9ecef;
             border-radius: 25px;
-            font-size: 1em;
+            font-size: 0.95em;
             transition: all 0.3s ease;
             background: white;
         }
@@ -207,39 +191,37 @@
         #taskInput:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-            transform: translateY(-2px);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .input-buttons {
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .add-btn, .mic-btn {
-            width: 55px;
-            height: 55px;
+            width: 48px;
+            height: 48px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             border-radius: 50%;
             color: white;
-            font-size: 2em;
+            font-size: 1.6em;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 12px rgba(102, 126, 234, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
 
-        .add-btn:hover {
-            transform: rotate(90deg) scale(1.1);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        .add-btn:active {
+            transform: scale(0.95);
         }
 
-        .mic-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        .mic-btn:active {
+            transform: scale(0.95);
         }
 
         .mic-btn.recording {
@@ -249,48 +231,49 @@
 
         @keyframes recordPulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
         }
 
         .tasks-list {
-            max-height: 500px;
+            flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            -webkit-overflow-scrolling: touch;
+            padding: 12px;
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
         }
 
         .tasks-list::-webkit-scrollbar {
-            width: 8px;
+            width: 4px;
         }
 
         .tasks-list::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: transparent;
         }
 
         .tasks-list::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: rgba(102, 126, 234, 0.3);
             border-radius: 10px;
         }
 
         .task-item {
             background: white;
-            padding: 18px;
-            margin-bottom: 12px;
-            border-radius: 18px;
+            padding: 14px;
+            margin-bottom: 10px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
             cursor: pointer;
             position: relative;
-            overflow: hidden;
-            animation: taskSlide 0.4s ease-out;
+            animation: taskSlide 0.3s ease-out;
         }
 
         @keyframes taskSlide {
             from {
                 opacity: 0;
-                transform: translateX(50px);
+                transform: translateX(30px);
             }
             to {
                 opacity: 1;
@@ -298,9 +281,8 @@
             }
         }
 
-        .task-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+        .task-item:active {
+            transform: scale(0.98);
         }
 
         .task-item.completed {
@@ -313,36 +295,30 @@
         }
 
         .checkbox {
-            width: 28px;
-            height: 28px;
+            width: 26px;
+            height: 26px;
             border: 3px solid #667eea;
             border-radius: 50%;
             flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             background: white;
         }
 
         .task-item.completed .checkbox {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-color: #667eea;
-            animation: checkBounce 0.5s ease;
-        }
-
-        @keyframes checkBounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3); }
         }
 
         .checkbox::after {
             content: '✓';
             color: white;
-            font-size: 1.2em;
+            font-size: 1.1em;
             opacity: 0;
             transform: scale(0);
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
 
         .task-item.completed .checkbox::after {
@@ -356,42 +332,35 @@
         }
 
         .task-text {
-            font-size: 1.1em;
+            font-size: 1em;
             color: #333;
             word-break: break-word;
             margin-bottom: 4px;
+            line-height: 1.4;
         }
 
         .task-meta {
-            font-size: 0.75em;
+            font-size: 0.7em;
             color: #999;
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
         }
 
         .task-actions {
             display: flex;
-            gap: 8px;
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .task-item:hover .task-actions {
-            opacity: 1;
+            gap: 6px;
         }
 
         .edit-btn, .delete-btn {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
             border: none;
             border-radius: 50%;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2em;
+            font-size: 1.1em;
+            flex-shrink: 0;
         }
 
         .edit-btn {
@@ -399,9 +368,8 @@
             color: white;
         }
 
-        .edit-btn:hover {
-            transform: scale(1.15) rotate(15deg);
-            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.4);
+        .edit-btn:active {
+            transform: scale(0.9);
         }
 
         .delete-btn {
@@ -409,32 +377,25 @@
             color: white;
         }
 
-        .delete-btn:hover {
-            transform: scale(1.15) rotate(-15deg);
-            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+        .delete-btn:active {
+            transform: scale(0.9);
         }
 
         .empty-state {
             text-align: center;
-            padding: 60px 20px;
+            padding: 50px 20px;
             color: #999;
         }
 
         .empty-state-icon {
-            font-size: 5em;
-            margin-bottom: 20px;
+            font-size: 4em;
+            margin-bottom: 15px;
             opacity: 0.5;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
         }
 
         .empty-state-text {
-            font-size: 1.3em;
-            margin-bottom: 10px;
+            font-size: 1.2em;
+            margin-bottom: 8px;
         }
 
         .modal {
@@ -449,7 +410,7 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            animation: fadeIn 0.3s ease;
+            padding: 20px;
         }
 
         .modal.active {
@@ -458,61 +419,49 @@
 
         .modal-content {
             background: white;
-            padding: 35px;
-            border-radius: 25px;
-            width: 90%;
-            max-width: 400px;
+            padding: 25px 20px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 350px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: modalSlide 0.4s ease-out;
-        }
-
-        @keyframes modalSlide {
-            from {
-                opacity: 0;
-                transform: translateY(-50px) scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
         }
 
         .modal-title {
-            font-size: 1.8em;
-            margin-bottom: 20px;
+            font-size: 1.5em;
+            margin-bottom: 18px;
             color: #333;
             text-align: center;
         }
 
         .modal-input {
             width: 100%;
-            padding: 15px;
+            padding: 12px 15px;
             border: 2px solid #e9ecef;
             border-radius: 15px;
-            font-size: 1em;
-            margin-bottom: 20px;
+            font-size: 0.95em;
+            margin-bottom: 18px;
             transition: all 0.3s ease;
         }
 
         .modal-input:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .modal-buttons {
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
         .modal-btn {
             flex: 1;
-            padding: 15px;
+            padding: 13px;
             border: none;
             border-radius: 15px;
-            font-size: 1em;
+            font-size: 0.95em;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             font-weight: 600;
         }
 
@@ -521,9 +470,8 @@
             color: white;
         }
 
-        .save-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        .save-btn:active {
+            transform: scale(0.97);
         }
 
         .cancel-btn {
@@ -531,35 +479,34 @@
             color: #666;
         }
 
-        .cancel-btn:hover {
-            background: #dee2e6;
-            transform: translateY(-2px);
+        .cancel-btn:active {
+            transform: scale(0.97);
         }
 
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: max(20px, env(safe-area-inset-top));
+            right: 15px;
+            left: 15px;
             background: white;
-            padding: 20px 25px;
+            padding: 15px 18px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
             display: none;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             z-index: 2000;
-            animation: slideInRight 0.4s ease-out;
-            max-width: 400px;
+            animation: slideDown 0.3s ease-out;
         }
 
-        @keyframes slideInRight {
+        @keyframes slideDown {
             from {
                 opacity: 0;
-                transform: translateX(100px);
+                transform: translateY(-20px);
             }
             to {
                 opacity: 1;
-                transform: translateX(0);
+                transform: translateY(0);
             }
         }
 
@@ -581,16 +528,16 @@
 
         .undo-bar {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: max(15px, env(safe-area-inset-bottom));
+            left: 15px;
+            right: 15px;
             background: #323232;
             color: white;
-            padding: 15px 25px;
+            padding: 12px 18px;
             border-radius: 50px;
             display: none;
             align-items: center;
-            gap: 20px;
+            justify-content: space-between;
             z-index: 2000;
             animation: slideUp 0.3s ease;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -599,11 +546,11 @@
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translate(-50%, 50px);
+                transform: translateY(50px);
             }
             to {
                 opacity: 1;
-                transform: translate(-50%, 0);
+                transform: translateY(0);
             }
         }
 
@@ -615,49 +562,30 @@
             background: #667eea;
             color: white;
             border: none;
-            padding: 8px 20px;
+            padding: 6px 18px;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
         }
 
-        .undo-btn:hover {
-            background: #7c8ef0;
-            transform: scale(1.05);
+        .undo-btn:active {
+            transform: scale(0.95);
         }
 
         [dir="ltr"] .task-item {
-            animation: taskSlideEn 0.4s ease-out;
+            animation: taskSlideEn 0.3s ease-out;
         }
 
         @keyframes taskSlideEn {
             from {
                 opacity: 0;
-                transform: translateX(-50px);
+                transform: translateX(-30px);
             }
             to {
                 opacity: 1;
                 transform: translateX(0);
-            }
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2em;
-            }
-            
-            .filter-bar {
-                gap: 6px;
-            }
-            
-            .filter-btn {
-                padding: 6px 12px;
-                font-size: 0.8em;
-            }
-
-            .task-actions {
-                opacity: 1;
             }
         }
     </style>
@@ -758,7 +686,7 @@
                 filterCompleted: 'المكتملة',
                 sortNewest: 'الأحدث',
                 sortOldest: 'الأقدم',
-                maxReached: 'لا يمكنك إضافة أكثر من 60 مهمة — احذف أو أرشِف بعض المهام أولاً',
+                maxReached: 'لا يمكنك إضافة أكثر من 60 مهمة',
                 emptyTask: 'الرجاء كتابة نص المهمة',
                 taskAdded: 'تمت إضافة المهمة ✓',
                 taskUpdated: 'تم تحديث المهمة ✓',
@@ -766,7 +694,7 @@
                 undoBtn: 'تراجع',
                 created: 'أُنشئت',
                 noResults: 'لا توجد نتائج',
-                noResultsDesc: 'جرب تعديل البحث أو الفلتر',
+                noResultsDesc: 'جرب تعديل البحث',
                 listening: 'استمع...',
                 voiceNotSupported: 'المتصفح لا يدعم الإدخال الصوتي'
             },
@@ -787,7 +715,7 @@
                 filterCompleted: 'Completed',
                 sortNewest: 'Newest',
                 sortOldest: 'Oldest',
-                maxReached: 'You cannot add more than 60 tasks — delete or archive some tasks first',
+                maxReached: 'You cannot add more than 60 tasks',
                 emptyTask: 'Please enter task text',
                 taskAdded: 'Task added ✓',
                 taskUpdated: 'Task updated ✓',
@@ -795,7 +723,7 @@
                 undoBtn: 'Undo',
                 created: 'Created',
                 noResults: 'No results found',
-                noResultsDesc: 'Try adjusting your search or filter',
+                noResultsDesc: 'Try adjusting your search',
                 listening: 'Listening...',
                 voiceNotSupported: 'Browser does not support voice input'
             }
@@ -840,6 +768,10 @@
             renderTasks();
             input.value = '';
             showNotification(translations[currentLang].taskAdded, 'success');
+            
+            if ('vibrate' in navigator) {
+                navigator.vibrate(30);
+            }
         }
 
         function toggleTask(id) {
@@ -850,7 +782,7 @@
                 renderTasks();
                 
                 if ('vibrate' in navigator) {
-                    navigator.vibrate(50);
+                    navigator.vibrate(40);
                 }
             }
         }
@@ -861,7 +793,9 @@
                 editingId = id;
                 document.getElementById('editInput').value = task.title;
                 document.getElementById('editModal').classList.add('active');
-                document.getElementById('editInput').focus();
+                setTimeout(() => {
+                    document.getElementById('editInput').focus();
+                }, 100);
             }
         }
 
@@ -887,6 +821,10 @@
                 renderTasks();
                 closeModal();
                 showNotification(translations[currentLang].taskUpdated, 'success');
+                
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(30);
+                }
             }
         }
 
@@ -898,6 +836,10 @@
                 saveTasks();
                 renderTasks();
                 showUndoBar();
+                
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(50);
+                }
             }
         }
 
@@ -923,6 +865,10 @@
                 document.getElementById('undoBar').classList.remove('active');
                 clearTimeout(undoTimeout);
                 deletedTask = null;
+                
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(30);
+                }
             }
         }
 
@@ -952,21 +898,18 @@
         function getFilteredTasks() {
             let filtered = [...tasks];
 
-            // Apply filter
             if (currentFilter === 'active') {
                 filtered = filtered.filter(t => !t.isDone);
             } else if (currentFilter === 'completed') {
                 filtered = filtered.filter(t => t.isDone);
             }
 
-            // Apply search
             if (searchQuery) {
                 filtered = filtered.filter(t => 
                     t.title.toLowerCase().includes(searchQuery)
                 );
             }
 
-            // Apply sort
             if (currentSort === 'newest') {
                 filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             } else if (currentSort === 'oldest') {
@@ -987,18 +930,18 @@
                 if (hours === 0) {
                     const minutes = Math.floor(diff / (1000 * 60));
                     return currentLang === 'ar' 
-                        ? `منذ ${minutes} دقيقة` 
-                        : `${minutes} min ago`;
+                        ? `منذ ${minutes} د` 
+                        : `${minutes}m ago`;
                 }
                 return currentLang === 'ar' 
-                    ? `منذ ${hours} ساعة` 
+                    ? `منذ ${hours} س` 
                     : `${hours}h ago`;
             } else if (days === 1) {
                 return currentLang === 'ar' ? 'أمس' : 'Yesterday';
             } else if (days < 7) {
                 return currentLang === 'ar' 
                     ? `منذ ${days} أيام` 
-                    : `${days} days ago`;
+                    : `${days}d ago`;
             } else {
                 return date.toLocaleDateString(currentLang === 'ar' ? 'ar-SA' : 'en-US', {
                     month: 'short',
@@ -1044,8 +987,8 @@
                         </div>
                     </div>
                     <div class="task-actions">
-                        <button class="edit-btn" onclick="event.stopPropagation(); openEditModal(${task.id})" title="${currentLang === 'ar' ? 'تعديل' : 'Edit'}">✏️</button>
-                        <button class="delete-btn" onclick="event.stopPropagation(); deleteTask(${task.id})" title="${currentLang === 'ar' ? 'حذف' : 'Delete'}">🗑️</button>
+                        <button class="edit-btn" onclick="event.stopPropagation(); openEditModal(${task.id})">✏️</button>
+                        <button class="delete-btn" onclick="event.stopPropagation(); deleteTask(${task.id})">🗑️</button>
                     </div>
                 </div>
             `).join('');
@@ -1098,124 +1041,82 @@
             renderTasks();
         }
 
-        // Voice Features
         let micPermissionGranted = false;
 
         async function startVoiceInput() {
-            console.log('Starting voice input...');
-            
             const micBtn = document.getElementById('micBtn');
             const input = document.getElementById('taskInput');
             const originalPlaceholder = input.placeholder;
 
-            // Check if already recording
             if (micBtn.classList.contains('recording')) {
-                console.log('Already recording, ignoring...');
                 return;
             }
 
-            // Check if browser supports Speech Recognition
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             
             if (!SpeechRecognition) {
-                console.error('Speech Recognition not supported');
                 showNotification(translations[currentLang].voiceNotSupported, 'error');
                 return;
             }
 
-            // Request microphone permission only first time
             if (!micPermissionGranted) {
                 try {
-                    console.log('Requesting microphone permission (first time)...');
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    console.log('Microphone permission granted successfully');
                     micPermissionGranted = true;
-                    // Stop the test stream immediately
                     stream.getTracks().forEach(track => track.stop());
-                    // Small delay after permission
                     await new Promise(resolve => setTimeout(resolve, 200));
                 } catch (err) {
-                    console.error('Microphone permission denied:', err);
                     const msg = currentLang === 'ar' 
-                        ? 'يرجى السماح بإذن الميكروفون من إعدادات المتصفح'
-                        : 'Please allow microphone permission from browser settings';
+                        ? 'يرجى السماح بإذن الميكروفون'
+                        : 'Please allow microphone permission';
                     showNotification(msg, 'error');
                     return;
                 }
-            } else {
-                console.log('Microphone permission already granted, skipping...');
             }
 
-            // Create recognition instance
             const recognition = new SpeechRecognition();
-            
             recognition.lang = currentLang === 'ar' ? 'ar-SA' : 'en-US';
             recognition.continuous = false;
             recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
 
-            // Auto-stop after 10 seconds
             let recognitionTimeout = setTimeout(() => {
-                console.log('Recognition timeout - stopping after 10 seconds');
                 try {
                     recognition.stop();
-                } catch (e) {
-                    console.log('Recognition already stopped');
-                }
+                } catch (e) {}
             }, 10000);
 
-            // Update UI
             micBtn.classList.add('recording');
             input.placeholder = translations[currentLang].listening;
-            console.log('UI updated, starting recognition...');
-
-            recognition.onstart = () => {
-                console.log('✅ Speech recognition started successfully');
-            };
 
             recognition.onresult = (event) => {
-                console.log('✅ Speech recognition result received:', event);
-                clearTimeout(recognitionTimeout); // Clear timeout on result
+                clearTimeout(recognitionTimeout);
                 const transcript = event.results[0][0].transcript;
-                console.log('Transcript:', transcript);
                 input.value = transcript;
                 input.focus();
                 const msg = currentLang === 'ar' 
-                    ? 'تم التعرف على الصوت بنجاح ✓' 
-                    : 'Voice recognized successfully ✓';
+                    ? 'تم التعرف على الصوت ✓' 
+                    : 'Voice recognized ✓';
                 showNotification(msg, 'success');
+                
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(40);
+                }
             };
 
             recognition.onerror = (event) => {
-                console.error('❌ Speech recognition error:', event.error, event);
-                clearTimeout(recognitionTimeout); // Clear timeout on error
-                let errorMsg = '';
+                clearTimeout(recognitionTimeout);
+                if (event.error === 'aborted') return;
                 
-                if (event.error === 'aborted') {
-                    // Don't show error for aborted - user might have clicked multiple times
-                    console.log('Recognition aborted - likely duplicate click');
-                    return;
-                } else if (event.error === 'not-allowed' || event.error === 'permission-denied') {
-                    micPermissionGranted = false; // Reset permission flag
+                let errorMsg = '';
+                if (event.error === 'not-allowed') {
+                    micPermissionGranted = false;
                     errorMsg = currentLang === 'ar' 
-                        ? 'يرجى السماح بإذن الميكروفون من إعدادات المتصفح'
-                        : 'Please allow microphone permission from browser settings';
+                        ? 'يرجى السماح بإذن الميكروفون'
+                        : 'Please allow microphone';
                 } else if (event.error === 'no-speech') {
                     errorMsg = currentLang === 'ar' 
-                        ? 'لم يتم التقاط أي صوت، حاول مرة أخرى'
-                        : 'No speech detected, try again';
-                } else if (event.error === 'audio-capture') {
-                    errorMsg = currentLang === 'ar' 
-                        ? 'لم يتم العثور على ميكروفون'
-                        : 'No microphone found';
-                } else if (event.error === 'network') {
-                    errorMsg = currentLang === 'ar' 
-                        ? 'خطأ في الاتصال بالشبكة'
-                        : 'Network error';
-                } else {
-                    errorMsg = currentLang === 'ar' 
-                        ? `خطأ: ${event.error}`
-                        : `Error: ${event.error}`;
+                        ? 'لم يتم التقاط صوت'
+                        : 'No speech detected';
                 }
                 
                 if (errorMsg) {
@@ -1224,58 +1125,39 @@
             };
 
             recognition.onend = () => {
-                console.log('Speech recognition ended');
-                clearTimeout(recognitionTimeout); // Clear timeout on end
+                clearTimeout(recognitionTimeout);
                 micBtn.classList.remove('recording');
                 input.placeholder = originalPlaceholder;
             };
 
             try {
                 recognition.start();
-                console.log('Recognition.start() called successfully');
             } catch (err) {
-                console.error('❌ Recognition start error:', err);
                 micBtn.classList.remove('recording');
                 input.placeholder = originalPlaceholder;
-                const msg = currentLang === 'ar' 
-                    ? 'حدث خطأ عند بدء التسجيل'
-                    : 'Error starting recording';
-                showNotification(msg, 'error');
             }
         }
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            // Enter on input
             if (e.target.id === 'taskInput' && e.key === 'Enter') {
                 addTask();
             }
             
-            // Enter on edit modal
             if (e.target.id === 'editInput' && e.key === 'Enter') {
                 saveEdit();
             }
             
-            // Escape to close modal
             if (e.key === 'Escape') {
                 closeModal();
             }
-            
-            // / to focus search
-            if (e.key === '/' && e.target.tagName !== 'INPUT') {
-                e.preventDefault();
-                document.getElementById('searchInput').focus();
-            }
         });
 
-        // Click outside modal to close
         document.getElementById('editModal').addEventListener('click', (e) => {
             if (e.target.id === 'editModal') {
                 closeModal();
             }
         });
 
-        // Initialize
         loadTasks();
     </script>
 </body>
